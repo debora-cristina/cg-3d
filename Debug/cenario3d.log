@@ -1,0 +1,75 @@
+﻿  cenariomain.cpp
+e:\meus documentos\cg-final\cenariomain.cpp(54): warning C4005: 'TIJOLO': macro redefinition
+  e:\meus documentos\cg-final\cenariomain.cpp(38): note: see previous definition of 'TIJOLO'
+e:\meus documentos\cg-final\cenariomain.cpp(61): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\meus documentos\cg-final\cenariomain.cpp(519): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(520): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(589): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(590): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(658): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(659): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(727): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(728): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(797): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(798): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(867): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(868): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(938): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(939): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1007): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1008): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1077): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1078): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1147): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1148): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1360): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1361): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1431): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1432): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1450): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1451): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1578): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1697): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1710): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1724): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1773): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1817): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1824): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1832): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1847): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1882): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1931): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(1982): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2029): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2037): warning C4305: '+=': truncation from 'double' to 'float'
+e:\meus documentos\cg-final\cenariomain.cpp(2095): warning C4305: '+=': truncation from 'double' to 'float'
+e:\meus documentos\cg-final\cenariomain.cpp(2108): warning C4305: '+=': truncation from 'double' to 'float'
+e:\meus documentos\cg-final\cenariomain.cpp(2120): warning C4305: '+=': truncation from 'double' to 'float'
+e:\meus documentos\cg-final\cenariomain.cpp(2133): warning C4305: '+=': truncation from 'double' to 'float'
+e:\meus documentos\cg-final\cenariomain.cpp(2188): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2189): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2253): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2254): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2318): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2319): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2382): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2383): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2448): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2449): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2513): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2514): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2578): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2579): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2642): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2643): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2707): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2708): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(2814): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\meus documentos\cg-final\cenariomain.cpp(2927): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\meus documentos\cg-final\cenariomain.cpp(2935): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\meus documentos\cg-final\cenariomain.cpp(2943): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\meus documentos\cg-final\cenariomain.cpp(2952): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+e:\meus documentos\cg-final\cenariomain.cpp(3063): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+e:\meus documentos\cg-final\cenariomain.cpp(3066): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  cenario3d.vcxproj -> E:\Meus documentos\CG-Final\Debug\cenario3d.exe
+  cenario3d.vcxproj -> E:\Meus documentos\CG-Final\Debug\cenario3d.pdb (Full PDB)

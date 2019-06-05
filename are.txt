@@ -1,0 +1,424 @@
+#include <GL/glut.h>
+#include <soil/SOIL.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_TEX 22    /*numero de texturas que serao usadas no vetor de texturas*/
+
+#define AREIA 0       /*posições do vetor de texturas que armazenam determinadas texturas*/
+#define CEU 1
+#define CEU2 2
+#define CEU3 3
+#define MENU1 4
+#define MENU2 5
+#define MENU3 6
+#define OPCAO 7
+#define TIJOLO 8
+
+
+
+float angulo = 0.0f, rota_moinho = 0, controle = 1, controle2 = 1;
+float xcamera = 0.0f, ycamera = 5.0f, zcamera = 30.0f;     /*posicao da camera*/
+float dxcamera = 0.0f, dycamera = 0.0f, dzcamera = -1.0f;  /*direção ao deslocar a camera*/
+
+int mostramenu = MENU1;     /*variaveis para o menu*/
+float quant = 0.4f, cmenu = 0;  /*quant é o valor das coordenas rgb da luz difusa da camera*/
+GLuint texturas[MAX_TEX]; /*vetor de texturas*/
+
+						  /*função que configura o menu*/
+
+void menu() {
+	glBindTexture(GL_TEXTURE_2D, texturas[mostramenu]);
+	glPushMatrix();
+	glTranslatef(xcamera + 17.0, ycamera - 5, zcamera - 24.7);
+	glRotatef(-0.6 * 57, 0.0, 1.0, 0.0);
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-10.0f, -5.0f, 0.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(10.0f, -5.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(10.0f, 15.0f, 0.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-10.0f, 15.0f, 0.0f);
+	glEnd();
+	glPopMatrix();
+}
+
+/*função que configura a direção da camera*/
+void OrientaCamera(float ang) {
+	dxcamera = sin(ang);
+	dzcamera = -cos(ang);
+	glLoadIdentity();
+	gluLookAt(xcamera, ycamera, zcamera, xcamera + dxcamera, ycamera + dycamera, zcamera + dzcamera, 0.0f, 1.0f, 0.0f);
+}
+
+/*função que configura a posição da camera*/
+void MoveCamera(int direcao) {
+	if (xcamera>90.0f) {
+		if (direcao*(dxcamera)*0.7 < 0)
+			xcamera = xcamera + direcao*(dxcamera)*0.7;
+	}
+	if (xcamera<-90.0f) {
+		if (direcao*(dxcamera)*0.7 > 0)
+			xcamera = xcamera + direcao*(dxcamera)*0.7;
+	}
+	if (xcamera>-90.0f && xcamera<90.0f)
+		xcamera = xcamera + direcao*(dxcamera)*0.7;
+
+	if (zcamera>90.0f) {
+		if (direcao*(dzcamera)*0.7 < 0)
+			zcamera = zcamera + direcao*(dzcamera)*0.7;
+	}
+	if (zcamera<-90.0f) {
+		if (direcao*(dzcamera)*0.7 > 0)
+			zcamera = zcamera + direcao*(dzcamera)*0.7;
+	}
+	if (zcamera<90.0f && zcamera>-90.0f)
+		zcamera = zcamera + direcao*(dzcamera)*0.7;
+
+	glLoadIdentity();
+	gluLookAt(xcamera, ycamera, zcamera, xcamera + dxcamera, ycamera + dycamera, zcamera + dzcamera, 0.0f, 1.0f, 0.0f);
+	GLfloat posicaocamera[4] = { xcamera,ycamera,zcamera,1.0 };
+	glLightfv(GL_LIGHT1, GL_POSITION, posicaocamera);
+}
+
+/*função que trata eventos do teclado normal*/
+void TeclasNormais(unsigned char key, int x, int y) {
+
+	key = tolower(key);
+
+	GLfloat luzdifusa[4] = { quant, quant, quant, 1.0 };
+	if (cmenu != 0) {
+		switch (key) {
+		case 27:
+			exit(0);
+			break;
+		case 'j':
+			angulo -= 0.1f;
+			break;
+		case 's':
+			MoveCamera(-1);
+			break;
+		case 'w':
+			MoveCamera(1);
+			break;
+		case 'a':
+			angulo -= 0.1f;
+			OrientaCamera(angulo);
+			break;
+		case 'd':
+			angulo += 0.1f;
+			OrientaCamera(angulo);
+			break;
+		case 'r':
+			angulo = 0.0f;
+			rota_moinho = 0.0f;
+			xcamera = 0.0f;
+			ycamera = 5.0f;
+			zcamera = 30.0f;
+			dxcamera = 0.0f;
+			dycamera = 0.0f;
+			dzcamera = -20.0f;
+			quant = 0.4f;
+			MoveCamera(1);
+			luzdifusa[0] = quant;
+			luzdifusa[1] = quant;
+			luzdifusa[2] = quant;
+			glLightfv(GL_LIGHT1, GL_DIFFUSE, luzdifusa);
+			break;
+		case 'o':
+			glEnable(GL_LIGHT1);
+			break;
+		case 'p':
+			glDisable(GL_LIGHT1);
+			break;
+		case 43:  /*+*/
+			quant += 0.1f;
+			if (quant>1.0) quant = 1.0f;
+			glLightfv(GL_LIGHT1, GL_DIFFUSE, luzdifusa);
+			break;
+		case 45:  /*-*/
+			quant -= 0.1f;
+			if (quant>-2.2) quant = -2.1f;
+			glLightfv(GL_LIGHT1, GL_DIFFUSE, luzdifusa);
+			break;
+		}
+	}
+	else {
+		switch (key) {
+		case 27:
+			exit(0);
+			break;
+		case 13:
+			switch (mostramenu) {
+			case MENU1:
+				angulo = 0.0f;
+				rota_moinho = 0.0f;
+				xcamera = 0.0f;
+				ycamera = 5.0f;
+				zcamera = 30.0f;
+				dxcamera = 0.0f;
+				dycamera = 0.0f;
+				dzcamera = -20.0f;
+				quant = 0.4f;
+				cmenu = 1;
+				MoveCamera(1);
+				luzdifusa[0] = quant;
+				luzdifusa[1] = quant;
+				luzdifusa[2] = quant;
+				glLightfv(GL_LIGHT1, GL_DIFFUSE, luzdifusa);
+
+				break;
+			case MENU2:
+				mostramenu = OPCAO;
+				menu();
+				glutSwapBuffers();
+				break;
+			case MENU3:
+				exit(0);
+				break;
+			case OPCAO:
+				mostramenu = MENU1;
+				menu();
+				glutSwapBuffers();
+				break;
+			}
+			break;
+		case 'q':
+			if (mostramenu == OPCAO) {
+				mostramenu = MENU1;
+				menu();
+				glutSwapBuffers();
+			}
+		}
+	}
+}
+
+
+/*função que trata os eventos de teclas especiais*/
+void TeclasEspeciais(int key, int x, int y) {
+	if (cmenu != 0) {
+		switch (key) {
+		case GLUT_KEY_UP:
+			ycamera += 1.0f;
+			if (ycamera == 41) ycamera = 40;
+			MoveCamera(0);
+			break;
+		case GLUT_KEY_DOWN:
+			ycamera -= 1.0f;
+			if (ycamera == 0) ycamera = 1.0f;
+			MoveCamera(0);
+			break;
+		}
+	}
+	else {
+		switch (key) {
+		case GLUT_KEY_UP:
+			if (mostramenu == MENU2)
+				mostramenu = MENU1;
+			if (mostramenu == MENU3)
+				mostramenu = MENU2;
+			menu();
+			glutSwapBuffers();
+			break;
+		case GLUT_KEY_DOWN:
+			if (mostramenu == MENU2)
+				mostramenu = MENU3;
+			if (mostramenu == MENU1)
+				mostramenu = MENU2;
+			menu();
+			glutSwapBuffers();
+			break;
+		}
+	}
+}
+
+/*função que configura o redimensionamento de janela*/
+void AlteraTamanho(int largura, int altura) {
+	if (altura == 0) altura = 1;
+	int taxa = 1.0f * largura / altura;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glViewport(0, 0, largura, altura);
+	gluPerspective(45.0, taxa, 1.0, 1000.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	if (cmenu == 0) {
+		gluLookAt(xcamera, ycamera, zcamera, xcamera + dxcamera, ycamera + dycamera, zcamera + dzcamera, 0.0f, 1.0f, 0.0f);
+		angulo = 0.6f;
+		OrientaCamera(angulo);
+		int i;
+		cmenu = 1;
+		for (i = 0; i<1000; i++) {
+			MoveCamera(-1);
+			TeclasEspeciais(GLUT_KEY_UP, 0, 0);
+		}
+		cmenu = 0;
+	}
+	else {
+		gluLookAt(xcamera, ycamera, zcamera, xcamera + dxcamera, ycamera + dycamera, zcamera + dzcamera, 0.0f, 1.0f, 0.0f);
+	}
+}
+
+/*função que inicializa o programa, nela são configuradas as luzes do programa e as texturas que serão utilizadas*/
+void Inicializa() {
+
+	GLfloat luzAmbiente[4] = { 1.0, 1.0, 1.0, 1.0 };                         /*vetores que armazenam dados a serem utilizados na configuracao de luzes*/
+	GLfloat luzEmissiva[4] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat luzdifusa[4] = { quant,quant,quant,1.0 };
+	GLfloat luzemissivaposicao[4] = { 0.0, 30.0, -80.0, 1.0 };
+	GLfloat posicaoLuz[4] = { 0.0, 20.0, 0.0, 1.0 };
+	GLfloat posicaocamera[4] = { xcamera,ycamera,zcamera,1.0 };
+	GLfloat posicaoLuzespecular[4] = { 0.0, 20.0, 80.0, 1.0 };
+	glShadeModel(GL_SMOOTH);                                               /*sombreamento suavizado*/
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);                   /*configura luz ambiente*/
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);                         /*configura as diversas luzes do programa*/
+	glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, luzdifusa);
+	glLightfv(GL_LIGHT1, GL_POSITION, posicaocamera);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, luzAmbiente);
+	glLightfv(GL_LIGHT2, GL_POSITION, posicaoLuzespecular);
+	glLightfv(GL_LIGHT3, GL_EMISSION, luzEmissiva);
+	glLightfv(GL_LIGHT3, GL_POSITION, luzemissivaposicao);
+
+	glEnable(GL_COLOR_MATERIAL);                                           /*habilita o uso de configuração de materiais*/
+	glEnable(GL_LIGHTING);                      						   /*habilita iluminação*/
+	glEnable(GL_LIGHT0);												   /*habilita as diversas luzes*/
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	glEnable(GL_LIGHT3);
+	glEnable(GL_DEPTH_TEST);                                               /*habilita teste de profundidade*/
+
+	glEnable(GL_TEXTURE_2D);                                            /*habilita texturas 2d e elas são configuradas*/
+	glGenTextures(1, texturas);
+
+	texturas[AREIA] = SOIL_load_OGL_texture("textura/areia.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[CEU] = SOIL_load_OGL_texture("textura/ceu.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[CEU2] = SOIL_load_OGL_texture("textura/ceu2.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[CEU3] = SOIL_load_OGL_texture("textura/ceu3.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[MENU1] = SOIL_load_OGL_texture("textura/menu1.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[MENU2] = SOIL_load_OGL_texture("textura/menu2.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[MENU3] = SOIL_load_OGL_texture("textura/menu3.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[OPCAO] = SOIL_load_OGL_texture("textura/opcao.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	texturas[TIJOLO] = SOIL_load_OGL_texture("textura/a.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+
+
+}
+
+void casa() {
+
+		glBindTexture(GL_TEXTURE_2D, texturas[TIJOLO]);     /*2 cilindros que são a base do placar*/
+	glPushMatrix();
+
+	glBegin(GL_QUADS);
+		glNormal3f(0, 1, 0);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(-30.0f, 20.0f, 0.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(-30.0f, 40.0f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(0.0f, 40.0f, 0.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(0.0f, 20.0f, 0.0f);
+	glEnd();
+	glPopMatrix();
+
+}
+
+/*função que desenha o cenario, ceu e mar*/
+void cenario() {
+	glBindTexture(GL_TEXTURE_2D, texturas[CEU]);             /*planos que definem os "horizontes" da cena*/
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-400.0f, 0.0f, -400.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-400.0f, 1000.0f, -400.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(400.0f, 1000.0f, -400.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(400.0f, 0.0f, -400.0f);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texturas[CEU3]);
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-400.0f, 0.0f, 400.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-400.0f, 1000.0f, 400.0f);
+	glTexCoord2f(0.5f, 1.0f); glVertex3f(400.0f, 1000.0f, 400.0f);
+	glTexCoord2f(0.5f, 0.0f); glVertex3f(400.0f, 0.0f, 400.0f);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texturas[CEU2]);
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-400.0f, 0.0f, 400.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-400.0f, 1000.0f, 400.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-400.0f, 1000.0f, -400.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-400.0f, 0.0f, -400.0f);
+	glEnd();
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(400.0f, 0.0f, 400.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(400.0f, 1000.0f, 400.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(400.0f, 1000.0f, -400.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(400.0f, 0.0f, -400.0f);
+	glEnd();
+}
+
+/*função que configura os materiais dos objetos que serao chamados para serem desenhados*/
+void Desenha() {
+	GLfloat espec_grama[4] = { 0.7, 0.7, 0.7, 1.0 };
+	GLint especMaterial = 100;
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, espec_grama);
+	glMateriali(GL_FRONT, GL_SHININESS, especMaterial);
+	glBindTexture(GL_TEXTURE_2D, texturas[AREIA]);
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-400.0f, 0.0f, -400.0f);
+	glTexCoord2f(0.0f, 80.0f); glVertex3f(400.0f, 0.0f, -400.0f);
+	glTexCoord2f(80.0f, 80.0f); glVertex3f(400.0f, 0.0f, 400.0f);
+	glTexCoord2f(80.0f, 0.0f); glVertex3f(-400.0f, 0.0f, 400.0f);
+	glEnd();
+	cenario();
+	
+
+	glPushMatrix();
+	glTranslatef(7.0f, 0.0f, -60.0f);
+	// glScalef(0.7, 0.7, 0.7);
+	//	glRotatef(180, 0.0, 1.0, 0.0);
+	casa();
+	glPopMatrix();
+	
+	
+	
+
+	if (cmenu == 0) {
+		//glBindTexture(GL_TEXTURE_2D, texturas[P]);
+		menu();
+	}
+	glutSwapBuffers();
+}
+
+/*função principal do programa*/
+int main(int argc, char **argv) {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(800, 600);
+	glutCreateWindow("ARENA COPACABA");
+
+	Inicializa();
+	glutKeyboardFunc(TeclasNormais);
+	glutSpecialFunc(TeclasEspeciais);
+
+	glutDisplayFunc(Desenha);
+	glutIdleFunc(Desenha);
+	glutFullScreen();
+	glutReshapeFunc(AlteraTamanho);
+
+	glutMainLoop();
+
+
+	return(0);
+}
+
+
+
+
